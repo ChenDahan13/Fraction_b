@@ -83,7 +83,6 @@ namespace ariel {
             Fraction& operator--();
             Fraction operator--(int);
             Fraction& reduceFraction();
-            bool isNegative() const;
             /*--------------------------------------*/
             
             /*--------- Stream Operators ---------*/

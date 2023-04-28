@@ -11,13 +11,6 @@ Fraction doubleToFraction(double num) {
     return f;
 }
 
-bool Fraction::isNegative() const{
-    if(this->numerator < 0 && this->denominator < 0)
-        return false;
-    if(this->numerator > 0 && this->denominator > 0) 
-        return false;
-    return true;
-}
 
 Fraction& Fraction::reduceFraction() {
     int d = __gcd(this->numerator, this->denominator);
@@ -78,15 +71,11 @@ bool Fraction::operator<=(const ariel::Fraction& other) const{
 } 
 
 bool Fraction::operator>(const ariel::Fraction& other) const{
-    if(this->isNegative() && !other.isNegative()) return false;
-    if (!this->isNegative() && other.isNegative()) return true;
     int sum = this->numerator*other.denominator - this->denominator*other.numerator;
     return (sum > 0) ? true : false;
 } 
 
 bool Fraction::operator<(const ariel::Fraction& other) const{
-    if(this->isNegative() && !other.isNegative()) return true;
-    if(!this->isNegative() && other.isNegative()) return false;
     int sum = other.numerator*this->denominator - other.denominator*this->numerator;
     return (sum > 0) ? true : false;
 } 
