@@ -91,6 +91,8 @@ bool Fraction::operator<(const ariel::Fraction& other) const{
     return (sum > 0) ? true : false;
 } 
 
+
+// --------- Double --------- // 
 Fraction Fraction::operator-(double other) const{
     Fraction f1 = doubleToFraction(other);
     return (this->operator-(f1));
@@ -137,6 +139,23 @@ Fraction ariel::operator*(double other, const Fraction& f) {
     
 } 
 
+bool Fraction::operator>=(double other) const{
+    Fraction f1 = doubleToFraction(other);
+    return (this->operator>=(f1));
+} 
+
+bool Fraction::operator>(double other) const{
+    Fraction f1 = doubleToFraction(other);
+    return (this->operator>(f1));
+} 
+
+bool Fraction::operator<(double other) const{
+    Fraction f1 = doubleToFraction(other);
+    return (this->operator<(f1));
+} 
+
+
+// --------- Int --------- // 
 bool ariel::operator<(int other, const Fraction& f) {
     Fraction f1 = doubleToFraction(other);
     return (f1 < f);
@@ -177,21 +196,8 @@ Fraction Fraction::operator-(int other) const{
     return (this->operator-(f1));
 } 
 
-bool Fraction::operator>=(double other) const{
-    Fraction f1 = doubleToFraction(other);
-    return (this->operator>=(f1));
-} 
 
-bool Fraction::operator>(double other) const{
-    Fraction f1 = doubleToFraction(other);
-    return (this->operator>(f1));
-} 
-
-bool Fraction::operator<(double other) const{
-    Fraction f1 = doubleToFraction(other);
-    return (this->operator<(f1));
-} 
-
+// -------- Self -------- // 
 Fraction& Fraction::operator++() {
     int newNumer = this->numerator + this->denominator;
     this->numerator = newNumer;
@@ -222,6 +228,8 @@ Fraction& Fraction::operator--() {
     return *this;
 }
 
+
+// -------- Stream -------- // 
 ostream& ariel::operator<<(ostream& output, const Fraction& f) {
     return (output << f.numerator << "/" << f.denominator);
 }
