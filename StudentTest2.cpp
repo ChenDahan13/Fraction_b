@@ -94,7 +94,7 @@ TEST_SUITE("Overloaded <= and >= operators tests") {
         Fraction frac9{0, 1};
         Fraction frac10{7, 5};
         Fraction frac11{4,3};
-
+        
         SUBCASE(">= operator test") {
             CHECK_GE(frac1, frac2);
             CHECK_GE(frac3, frac1);
@@ -164,7 +164,7 @@ TEST_SUITE("Overloaded < and > operators tests") {
             CHECK_FALSE((frac1 < frac2));
             CHECK_FALSE((frac6 < frac7));
         }
-
+       
         SUBCASE("Greater than test") {
             CHECK_GT(frac1, frac2);
             CHECK_GT(frac1, frac4);
@@ -676,7 +676,7 @@ TEST_SUITE("Input and output operators tests") {
         ss_in >> frac1 >> frac2;
         CHECK_EQ(frac1, Fraction{1, 2});
         CHECK_EQ(frac2, Fraction{3, -4});
-
+        
         std::stringstream ss_out;
         ss_out << frac1 << " and " << frac2;
         CHECK(ss_out.str() == "1/2 and -3/4");

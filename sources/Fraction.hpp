@@ -5,24 +5,28 @@
 #include <stdexcept>
 #include <algorithm>
 
+
 using namespace std;
 namespace ariel {
     class Fraction {
         int numerator;
         int denominator;
         public:
-            Fraction(int num = 1, int den = 2): numerator(num){  
-                if(den != 0) {
-                    this->denominator = den;
-                } else {
+            Fraction(int num = 1, int den = 2): numerator(num), denominator(den) {  
+                if(denominator == 0) {
                     throw invalid_argument("Denominator can't be zero");
                     return;
+                }
+                if(denominator < 0) {
+                    numerator *= -1;
+                    denominator *= -1;
                 }
                 this->reduceFraction();
             }
             Fraction(double num) {
-                this->numerator = int(num * 1000);
-                this->denominator = 1000;
+                constexpr int mag = 1000;
+                this->numerator = int(num * mag);
+                this->denominator = mag;
                 this->reduceFraction();
             }
             void setNumerator(int num) {
@@ -65,6 +69,7 @@ namespace ariel {
             /*------------ Double Operators ----------*/
             Fraction operator+(double other) const;
             Fraction operator-(double other) const;
+            Fraction operator/(double other) const;
             friend Fraction operator*(double other, const Fraction& fract);
             bool operator>(double other) const;
             bool operator<(double other) const;
@@ -89,6 +94,10 @@ namespace ariel {
             friend ostream& operator<<(ostream& output, const Fraction& fract);
             friend istream& operator>>(istream& input, Fraction& fract);
             /*------------------------------------*/
+
+            /*--------- Other ----------*/
+            void overFlowCheck(const Fraction other) const;
+            /*--------------------------*/
 
         
             

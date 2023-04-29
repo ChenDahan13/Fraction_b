@@ -11,6 +11,27 @@ Fraction doubleToFraction(double num) {
     return f;
 }
 
+void Fraction::overFlowCheck(const Fraction other) const{
+    if(((this->numerator > 25000 || this->denominator > 25000) && (other.numerator > 25000 || other.denominator > 25000)) ||
+      ((this->numerator < -25000 || this->denominator > 25000) && (other.numerator > 25000 || other.denominator > 25000)) ||
+      ((this->numerator > 25000 || this->denominator < -25000) && (other.numerator > 25000 || other.denominator > 25000)) ||
+      ((this->numerator > 25000 || this->denominator > 25000) && (other.numerator < -25000 || other.denominator > 25000)) ||
+      ((this->numerator > 25000 || this->denominator > 25000) && (other.numerator > 25000 || other.denominator < -25000)) ||
+      ((this->numerator < -25000 || this->denominator < -25000) && (other.numerator > 25000 || other.denominator > 25000))||
+      ((this->numerator < -25000 || this->denominator > 25000) && (other.numerator < -25000 || other.denominator > 25000))||
+      ((this->numerator < -25000 || this->denominator > 25000) && (other.numerator > 25000 || other.denominator < -25000))||
+      ((this->numerator > 25000 || this->denominator < -25000) && (other.numerator < -25000 || other.denominator > 25000))||
+      ((this->numerator > 25000 || this->denominator < -25000) && (other.numerator > 25000 || other.denominator < -25000))||
+      ((this->numerator > 25000 || this->denominator > 25000) && (other.numerator < -25000 || other.denominator < -25000))||
+      ((this->numerator < -25000 || this->denominator < -25000) && (other.numerator < -25000 || other.denominator > 25000))||
+      ((this->numerator < -25000 || this->denominator < -25000) && (other.numerator > 25000 || other.denominator < -25000))||
+      ((this->numerator < -25000 || this->denominator > 25000) && (other.numerator < -25000 || other.denominator < -25000))||
+      ((this->numerator > 25000 || this->denominator < -25000) && (other.numerator < -25000 || other.denominator < -25000))||
+      ((this->numerator < -25000 || this->denominator < -25000) && (other.numerator < -25000 || other.denominator < -25000))) {
+        throw overflow_error("Operator can't be done");
+      }
+
+}
 
 Fraction& Fraction::reduceFraction() {
     int d = __gcd(this->numerator, this->denominator);
@@ -22,16 +43,18 @@ Fraction& Fraction::reduceFraction() {
 }
 
 string Fraction::to_string() {
-    return std::to_string(this->numerator) + " / " + std::to_string(this->denominator);
+    return std::to_string(this->numerator) + "/" + std::to_string(this->denominator);
 }
 
 Fraction Fraction::operator*(const ariel::Fraction& other) const{
+    this->overFlowCheck(other);
     Fraction f(this->numerator*other.numerator, this->denominator*other.denominator);
     f.reduceFraction();
     return f;
 } 
 
 Fraction Fraction::operator+(const ariel::Fraction& other) const{
+    this->overFlowCheck(other);
     int newNumerator = (this->numerator*other.denominator) + (this->denominator*other.numerator);
     int newDenominator = this->denominator*other.denominator;
     Fraction f(newNumerator, newDenominator);
@@ -40,6 +63,7 @@ Fraction Fraction::operator+(const ariel::Fraction& other) const{
 }
 
 Fraction Fraction::operator-(const ariel::Fraction& other) const {
+    this->overFlowCheck(other);
     int newNumerator = (this->numerator*other.denominator) - (this->denominator*other.numerator);
     int newDenominator = this->denominator*other.denominator;
     Fraction f(newNumerator, newDenominator);
@@ -48,13 +72,17 @@ Fraction Fraction::operator-(const ariel::Fraction& other) const {
 } 
 
 Fraction Fraction::operator/(const ariel::Fraction& other) const{
+    this->overFlowCheck(other);
+    if(other.numerator == 0) {
+        throw runtime_error("Other numerator is zero. Divide is illegal");
+    }
     Fraction f(this->numerator*other.denominator, this->denominator*other.numerator);
     f.reduceFraction();
     return f;
 } 
 
 bool Fraction::operator>=(const ariel::Fraction& other) const{
-    if(operator>(other) || operator==(other))
+    if(this->operator>(other) || this->operator==(other))
         return true;
     return false;
 } 
@@ -65,7 +93,7 @@ bool Fraction::operator==(const ariel::Fraction& other) const{
 } 
 
 bool Fraction::operator<=(const ariel::Fraction& other) const{
-    if(operator<(other) || operator==(other))
+    if(this->operator<(other) || this->operator==(other))
         return true;
     return false;
 } 
@@ -90,6 +118,11 @@ Fraction Fraction::operator-(double other) const{
 Fraction Fraction::operator+(double other) const{
     Fraction f1 = doubleToFraction(other);
     return (this->operator+(f1));
+} 
+
+Fraction Fraction::operator/(double other) const{
+    Fraction f1 = doubleToFraction(other);
+    return (this->operator/(f1));
 } 
 
 Fraction ariel::operator+(double other, const Fraction& f) {
@@ -220,22 +253,20 @@ Fraction& Fraction::operator--() {
 
 // -------- Stream -------- // 
 ostream& ariel::operator<<(ostream& output, const Fraction& f) {
-    return (output << f.numerator << "/" << f.denominator);
+    output << f.numerator << "/" << f.denominator;
+    return output;
 }
 
 istream& ariel::operator>>(istream& input, Fraction& f) {
-    string fraction;
-    input >> fraction;
-    size_t pos = fraction.find(' '); // Searching if there a space in input
-    if(pos == string::npos) {
-        throw invalid_argument("Fraction was written unright");
+    int num = 0, den = 0;
+    input >> num >> den;
+    if(input.fail()) {
+        throw runtime_error("Input is not good");
     }
-    string numStr = fraction.substr(0, pos); // Puts to string until the index of the slash
-    string denStr = fraction.substr(pos + 1); // Puts to string from the index of the slash
-    
-    // Converts the strings to integers and updates the fraction
-    f.setNumerator(stoi(numStr));
-    f.setDenominator(stoi(denStr));
+    if(den == 0) {
+        throw runtime_error("Denominator can't be zero");
+    }
+    f = Fraction(num, den);
     return input;
 }
 
