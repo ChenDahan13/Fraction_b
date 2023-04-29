@@ -11,7 +11,7 @@ Fraction doubleToFraction(double num) {
     return f;
 }
 
-void Fraction::overFlowCheck(const Fraction other) const{
+void Fraction::overFlowCheck(Fraction other) const{
     if(((this->numerator > 250000 || this->denominator > 250000) && (other.numerator > 250000 || other.denominator > 250000)) ||
       ((this->numerator < -250000 || this->denominator > 250000) && (other.numerator > 250000 || other.denominator > 250000)) ||
       ((this->numerator > 250000 || this->denominator < -250000) && (other.numerator > 250000 || other.denominator > 250000)) ||
@@ -35,6 +35,9 @@ void Fraction::overFlowCheck(const Fraction other) const{
 
 Fraction& Fraction::reduceFraction() {
     int d = __gcd(this->numerator, this->denominator);
+    if(d < 0) {
+        d *= -1;
+    }
     if (d != 0) {
         this->numerator = this->numerator / d;
         this->denominator = this->denominator / d;
