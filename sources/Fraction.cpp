@@ -12,22 +12,22 @@ Fraction doubleToFraction(double num) {
 }
 
 void Fraction::overFlowCheck(const Fraction other) const{
-    if(((this->numerator > 25000 || this->denominator > 25000) && (other.numerator > 25000 || other.denominator > 25000)) ||
-      ((this->numerator < -25000 || this->denominator > 25000) && (other.numerator > 25000 || other.denominator > 25000)) ||
-      ((this->numerator > 25000 || this->denominator < -25000) && (other.numerator > 25000 || other.denominator > 25000)) ||
-      ((this->numerator > 25000 || this->denominator > 25000) && (other.numerator < -25000 || other.denominator > 25000)) ||
-      ((this->numerator > 25000 || this->denominator > 25000) && (other.numerator > 25000 || other.denominator < -25000)) ||
-      ((this->numerator < -25000 || this->denominator < -25000) && (other.numerator > 25000 || other.denominator > 25000))||
-      ((this->numerator < -25000 || this->denominator > 25000) && (other.numerator < -25000 || other.denominator > 25000))||
-      ((this->numerator < -25000 || this->denominator > 25000) && (other.numerator > 25000 || other.denominator < -25000))||
-      ((this->numerator > 25000 || this->denominator < -25000) && (other.numerator < -25000 || other.denominator > 25000))||
-      ((this->numerator > 25000 || this->denominator < -25000) && (other.numerator > 25000 || other.denominator < -25000))||
-      ((this->numerator > 25000 || this->denominator > 25000) && (other.numerator < -25000 || other.denominator < -25000))||
-      ((this->numerator < -25000 || this->denominator < -25000) && (other.numerator < -25000 || other.denominator > 25000))||
-      ((this->numerator < -25000 || this->denominator < -25000) && (other.numerator > 25000 || other.denominator < -25000))||
-      ((this->numerator < -25000 || this->denominator > 25000) && (other.numerator < -25000 || other.denominator < -25000))||
-      ((this->numerator > 25000 || this->denominator < -25000) && (other.numerator < -25000 || other.denominator < -25000))||
-      ((this->numerator < -25000 || this->denominator < -25000) && (other.numerator < -25000 || other.denominator < -25000))) {
+    if(((this->numerator > 250000 || this->denominator > 250000) && (other.numerator > 250000 || other.denominator > 250000)) ||
+      ((this->numerator < -250000 || this->denominator > 250000) && (other.numerator > 250000 || other.denominator > 250000)) ||
+      ((this->numerator > 250000 || this->denominator < -250000) && (other.numerator > 250000 || other.denominator > 250000)) ||
+      ((this->numerator > 250000 || this->denominator > 250000) && (other.numerator < -250000 || other.denominator > 250000)) ||
+      ((this->numerator > 250000 || this->denominator > 250000) && (other.numerator > 250000 || other.denominator < -250000)) ||
+      ((this->numerator < -250000 || this->denominator < -250000) && (other.numerator > 250000 || other.denominator > 250000))||
+      ((this->numerator < -250000 || this->denominator > 250000) && (other.numerator < -250000 || other.denominator > 250000))||
+      ((this->numerator < -250000 || this->denominator > 250000) && (other.numerator > 250000 || other.denominator < -250000))||
+      ((this->numerator > 250000 || this->denominator < -250000) && (other.numerator < -250000 || other.denominator > 250000))||
+      ((this->numerator > 250000 || this->denominator < -250000) && (other.numerator > 250000 || other.denominator < -250000))||
+      ((this->numerator > 250000 || this->denominator > 250000) && (other.numerator < -250000 || other.denominator < -250000))||
+      ((this->numerator < -250000 || this->denominator < -250000) && (other.numerator < -250000 || other.denominator > 250000))||
+      ((this->numerator < -250000 || this->denominator < -250000) && (other.numerator > 250000 || other.denominator < -250000))||
+      ((this->numerator < -250000 || this->denominator > 250000) && (other.numerator < -250000 || other.denominator < -250000))||
+      ((this->numerator > 250000 || this->denominator < -250000) && (other.numerator < -250000 || other.denominator < -250000))||
+      ((this->numerator < -250000 || this->denominator < -250000) && (other.numerator < -250000 || other.denominator < -250000))) {
         throw overflow_error("Operator can't be done");
       }
 
