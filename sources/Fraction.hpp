@@ -12,17 +12,17 @@ namespace ariel {
         int numerator;
         int denominator;
         public:
-            Fraction(int num = 1, int den = 2) {  
+            Fraction(const int num = 1, int den = 2) {  
                 if(den == 0) {
                     throw invalid_argument("Denominator can't be zero");
                     return;
                 }
-                if(den < 0) {
-                    num *= -1;
-                    den *= -1;
-                }
                 numerator = num;
                 denominator = den;
+                if(denominator < 0) {
+                    numerator *= -1;
+                    denominator *= -1;
+                }
                 this->reduceFraction();
             }
             Fraction(double num) {
