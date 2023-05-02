@@ -40,6 +40,44 @@ void Fraction::overFlowCheck(Fraction other) const{
 
 }
 
+
+Fraction::Fraction(int num, int den) {  
+    if(den == 0) {
+        throw invalid_argument("Denominator can't be zero");
+        return;
+    }
+    this->numerator = num;
+    this->denominator = den;
+    if(this->denominator < 0) {
+        this->numerator *= -1;
+        this->denominator *= -1;
+    }
+    this->reduceFraction();
+}
+
+Fraction::Fraction(double num) {
+    int mag = 1000;
+    this->numerator = int(num * mag);
+    this->denominator = mag;
+    this->reduceFraction();
+}
+
+void Fraction::setNumerator(int num) {
+    this->numerator = num;
+}
+
+void Fraction::setDenominator(int den) {
+    this->denominator = den;
+}
+
+int Fraction::getNumerator() const {
+    return this->numerator;
+}
+
+int Fraction::getDenominator() const {
+    return this->denominator;
+}
+
 Fraction& Fraction::reduceFraction() {
     int d = __gcd(this->numerator, this->denominator);
     if(d < 0) {

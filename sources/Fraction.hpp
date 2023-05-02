@@ -13,37 +13,12 @@ namespace ariel {
         int numerator;
         int denominator;
         public:
-            Fraction(const int num = 1, int den = 2) {  
-                if(den == 0) {
-                    throw invalid_argument("Denominator can't be zero");
-                    return;
-                }
-                numerator = num;
-                denominator = den;
-                if(denominator < 0) {
-                    numerator *= -1;
-                    denominator *= -1;
-                }
-                this->reduceFraction();
-            }
-            Fraction(double num) {
-                constexpr int mag = 1000;
-                this->numerator = int(num * mag);
-                this->denominator = mag;
-                this->reduceFraction();
-            }
-            void setNumerator(int num) {
-                this->numerator = num;
-            }
-            void setDenominator(int num) {
-                this->denominator = num;
-            }
-            int getNumerator() const{
-                return  numerator;
-            }
-            int getDenominator() const{
-                return denominator;
-            }
+            Fraction(int num = 1, int den = 2);
+            Fraction(double num);
+            void setNumerator(int num);
+            void setDenominator(int num);
+            int getNumerator() const;
+            int getDenominator() const;
             string to_string();
 
             /*----------- Fractions Operators ----------*/
