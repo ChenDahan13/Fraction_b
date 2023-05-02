@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cmath>
 #include "Fraction.hpp"
 using namespace ariel;
 using namespace std;
@@ -9,6 +10,12 @@ Fraction doubleToFraction(double num) {
     Fraction f(newNumer, 1000);
     f.reduceFraction();
     return f;
+}
+
+Fraction Fraction::rounded() const {
+    int roundedNumerator = round(MAX_DIGITS * static_cast<double>(this->getNumerator()) / this->getDenominator());
+    int roundedDenominator = MAX_DIGITS;
+    return Fraction(roundedNumerator, roundedDenominator);
 }
 
 void Fraction::overFlowCheck(Fraction other) const{
@@ -91,7 +98,9 @@ bool Fraction::operator>=(const ariel::Fraction& other) const{
 } 
 
 bool Fraction::operator==(const ariel::Fraction& other) const{
-    int sum = this->numerator*other.denominator - this->denominator*other.numerator;
+    Fraction thisfrac = this->rounded();
+    Fraction otherfrac = other.rounded();
+    int sum = thisfrac.numerator*otherfrac.denominator - thisfrac.denominator*otherfrac.numerator;
     return (sum == 0) ? true : false;
 } 
 

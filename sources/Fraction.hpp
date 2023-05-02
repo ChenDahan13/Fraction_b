@@ -8,6 +8,7 @@
 
 using namespace std;
 namespace ariel {
+    const int MAX_DIGITS = 1000;
     class Fraction {
         int numerator;
         int denominator;
@@ -99,6 +100,7 @@ namespace ariel {
 
             /*--------- Other ----------*/
             void overFlowCheck(Fraction other) const;
+            Fraction rounded() const;
             /*--------------------------*/
 
         
